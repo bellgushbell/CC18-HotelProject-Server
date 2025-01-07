@@ -181,7 +181,7 @@ model UserHavePromotion {
   users     User      @relation(fields: [userId], references: [id])
   booking   Booking[]
 
-  @@map("userHavepromotion")
+  @@map("userhavepromotion")
 }
 
 model Booking {
