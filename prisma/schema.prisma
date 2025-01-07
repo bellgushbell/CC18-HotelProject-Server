@@ -29,6 +29,8 @@ model User {
   bookings   Booking[]
   promotions UserHavePromotion[]
   Chatbox    Chatbox?
+
+  @@map("user")
 }
 
 model Partner {
@@ -45,6 +47,8 @@ model Partner {
 
   user   User    @relation(fields: [userId], references: [id])
   hotels Hotel[]
+
+  @@map("partner")
 }
 
 model Hotel {
@@ -71,6 +75,8 @@ model Hotel {
   facilitiesHotel   FacilitiesHotel @relation(fields: [facilitiesHotelId], references: [id])
   facilitiesHotelId Int             @unique
   bookings          Booking[]
+
+  @@map("hotel")
 }
 
 model Room {
@@ -92,6 +98,8 @@ model Room {
   bookings BookingRoom[]
 
   facilitiesRoom FacilitiesRoom @relation(fields: [facilityRoomId], references: [id])
+
+  @@map("room")
 }
 
 model RoomImg {
@@ -100,6 +108,8 @@ model RoomImg {
   roomId Int    @map("room_id")
 
   room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@map("roomimg")
 }
 
 model FacilitiesHotel {
@@ -117,6 +127,8 @@ model FacilitiesHotel {
   isElevator     Boolean @default(false) @map("is_elevator")
 
   hotel Hotel?
+
+  @@map("facilitieshotel")
 }
 
 model FacilitiesRoom {
@@ -132,6 +144,8 @@ model FacilitiesRoom {
   isBathtub         Boolean @default(false) @map("is_bathtub")
   isWifi            Boolean @default(false) @map("is_wifi")
   room              Room?
+
+  @@map("facilitiesroom")
 }
 
 model Promotion {
@@ -153,6 +167,8 @@ model Promotion {
   endDate         DateTime @map("end_date")
 
   userHavePromotion UserHavePromotion[]
+
+  @@map("promotion")
 }
 
 model UserHavePromotion {
@@ -164,6 +180,8 @@ model UserHavePromotion {
   promotion Promotion @relation(fields: [promotionId], references: [id], onDelete: Cascade)
   users     User      @relation(fields: [userId], references: [id])
   booking   Booking[]
+
+  @@map("userHavepromotion")
 }
 
 model Booking {
@@ -189,6 +207,8 @@ model Booking {
   bookingRooms       BookingRoom[]
   payments           Payment?
   review             Review?
+
+  @@map("booking")
 }
 
 model BookingRoom {
@@ -199,6 +219,8 @@ model BookingRoom {
 
   booking Booking @relation(fields: [bookingId], references: [id])
   rooms   Room?   @relation(fields: [roomId], references: [id], onDelete: SetNull)
+
+  @@map("bookingroom")
 }
 
 model Review {
@@ -215,6 +237,8 @@ model Review {
   user    User    @relation(fields: [userId], references: [id])
   booking Booking @relation(fields: [bookingId], references: [id])
   hotel   Hotel   @relation(fields: [hotelId], references: [id])
+
+  @@map("review")
 }
 
 model Payment {
@@ -225,6 +249,8 @@ model Payment {
   createdAt     DateTime      @default(now()) @map("created_at")
 
   booking Booking @relation(fields: [bookingId], references: [id])
+
+  @@map("payment")
 }
 
 enum Status {
@@ -276,14 +302,18 @@ model Chatbox {
   userId   Int?      @unique
   user     User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
   messages Message[]
+
+  @@map("chatbox")
 }
 
 model Message {
   id        Int      @id @default(autoincrement())
   message   String
   isAdmin   Boolean  @default(false)
-  isRead    Boolean @default(false)
+  isRead    Boolean  @default(false)
   createdAt DateTime @default(now())
   chatboxId Int      @map("chatbox_id")
   chatbox   Chatbox  @relation(fields: [chatboxId], references: [id], onDelete: Cascade)
+
+  @@map("message")
 }

@@ -1,4 +1,5 @@
 const prisma = require("../configs/prisma");
+require('dotenv').config();
 const createError = require("../utility/createError");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const nodemailer = require("nodemailer")
@@ -113,8 +114,8 @@ exports.paymentSuccess = async (req, res, next) => {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: 'cc18hotelbook@gmail.com',
-                pass: 'qgsfjdpcajvdfxkt'
+                user: 'gushbellpiriyapong@gmail.com',
+                pass: 'pedxneqfoijhfghy'
             }
         });
         const checkInDate = new Date(booking.checkinDate)
@@ -122,7 +123,7 @@ exports.paymentSuccess = async (req, res, next) => {
         const checkInDateString = `${checkInDate.getFullYear()}-${checkInDate.getMonth().toString().padStart(2, '0')}-${checkInDate.getDate().toString().padStart(2, '0')}`
         const checkOutDateString = `${checkOutDate.getFullYear()}-${checkOutDate.getMonth().toString().padStart(2, '0')}-${checkOutDate.getDate().toString().padStart(2, '0')}`
         const mailOptions = {
-            from: 'cc18hotelbook@gmail.com',
+            from: 'gushbellpiriyapong@gmail.com',
             to: booking.email,
             subject: '[Hotel Book]Your Booking Has been completed',
             html: `
